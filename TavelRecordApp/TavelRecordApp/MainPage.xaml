@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="TavelRecordApp.MainPage">
+
+    <StackLayout VerticalOptions="CenterAndExpand"
+                 Margin="50">
+        <Image Source="fast_parrot.gif" IsAnimationPlaying="True"
+               HeightRequest="150"/>
+        <Entry x:Name="emailEntry"
+               Placeholder="Email"
+               Keyboard="Email"/>
+        <Entry x:Name="passwordEntry"
+               Placeholder="Password"
+               IsPassword="True"/>
+        <Button x:Name="LoginButton" 
+                Style="{StaticResource normalButton}"
+                Text="Log in"
+                Clicked="LoginButton_Clicked"
+                Margin="100,20,100,0"/>
+    </StackLayout>
+
+</ContentPage>
