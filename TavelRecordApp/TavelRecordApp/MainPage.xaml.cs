@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TavelRecordApp.Model;
 using Xamarin.Forms;
 
 namespace TavelRecordApp {
@@ -19,16 +20,35 @@ namespace TavelRecordApp {
             //planeIconImage.Source = ImageSource.FromResource("TavelRecordApp.Assets.Images.plane.png", assembly);
         }
 
-        private void LoginButton_Clicked(object sender, EventArgs e) {
+        private async void LoginButton_Clicked(object sender, EventArgs e) {
+
             bool isEmailEmpty = string.IsNullOrEmpty(emailEntry.Text);
             bool isPasswordEmpty = string.IsNullOrEmpty(passwordEntry.Text);
 
-            if (isEmailEmpty || isEmailEmpty) {
-
+            if (isEmailEmpty || isPasswordEmpty) {
+                await DisplayAlert("Error", "Missing fields", "Ok");
             }
             else {
-                Navigation.PushAsync(new HomePage());
+
+                var user = (await App.client.GetTable<Users>().Where(u => u.Email == emailEntry.Text).ToListAsync()).FirstOrDefault();
+                
+                if (user != null) {
+                    if(user.Password == passwordEntry.Text) {
+                        await Navigation.PushAsync(new HomePage());
+                    }
+                    else {
+                        await DisplayAlert("Error", "Password incorrect", "Bruh");
+                    }
+                }
+                else {
+                    await DisplayAlert("Error", "Login Error", "Perfect");
+                }
+                
             }
+        }
+
+        private void RegisterUserButton_Clicked(object sender, EventArgs e) {
+            Navigation.PushAsync(new RegisterPage());
         }
     }
 }

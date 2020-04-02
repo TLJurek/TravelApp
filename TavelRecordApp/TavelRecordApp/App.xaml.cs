@@ -1,10 +1,15 @@
-﻿using System;
+﻿using Microsoft.WindowsAzure.MobileServices;
+using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using System.Net.Http;
 
 namespace TavelRecordApp {
     public partial class App : Application {
         public static string DatabaseLocation = string.Empty;
+
+        public static MobileServiceClient client = new MobileServiceClient("https://travelrecordappxamtlj.azurewebsites.net", new HttpClientHandler());
+
         public App() {
             InitializeComponent();
 

@@ -8,6 +8,7 @@ using Android.Widget;
 using Android.OS;
 using System.IO;
 using Plugin.Permissions;
+using Microsoft.WindowsAzure.MobileServices;
 
 namespace TavelRecordApp.Droid
 {
@@ -23,6 +24,7 @@ namespace TavelRecordApp.Droid
 
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             Xamarin.FormsMaps.Init(this, savedInstanceState);
+            CurrentPlatform.Init();
 
             Plugin.CurrentActivity.CrossCurrentActivity.Current.Init(this, savedInstanceState);
 
