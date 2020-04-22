@@ -57,11 +57,15 @@ namespace TavelRecordApp {
             }
             GetLocation();
 
+            /*
             using (var conn = new SQLiteConnection(App.DatabaseLocation)) {
                 conn.CreateTable<Post>();
                 var posts = conn.Table<Post>().ToList();
                 DisplayInMap(posts);
             }
+            */
+            var posts = await App.client.GetTable<Post>().Where(p => p.UserId == App.user.Id).ToListAsync();
+            DisplayInMap(posts);
         }
 
             

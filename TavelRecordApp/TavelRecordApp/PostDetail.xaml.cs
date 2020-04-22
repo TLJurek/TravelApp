@@ -13,15 +13,23 @@ namespace TavelRecordApp {
     public partial class PostDetail : ContentPage {
         Post selectedPost;
 
+        public PostDetail() {
+            InitializeComponent();
+        }
+
         public PostDetail(Post selectedPost) {
             InitializeComponent();
             this.selectedPost = selectedPost;
             experienceEntry.Text = selectedPost.Experience;
         }
 
-        private void updateButton_Clicked(object sender, EventArgs e) {
+        private async void updateButton_Clicked(object sender, EventArgs e) {
             selectedPost.Experience = experienceEntry.Text;
+            await App.client.GetTable<Post>().UpdateAsync(selectedPost);
+            await DisplayAlert("Success", "Experience successfully updated", "Ok");
 
+            /*
+            selectedPost.Experience = experienceEntry.Text;
             using (var connection = new SQLiteConnection(App.DatabaseLocation)) {
                 connection.CreateTable<Post>();
                 var rows = connection.Update(selectedPost);
@@ -33,9 +41,13 @@ namespace TavelRecordApp {
                     DisplayAlert("Mf failed", "You ting failed fam", "Sad dev noises");
                 }
             }
+            */
         }
 
-        private void deleteButton_Clicked(object sender, EventArgs e) {
+        private async void deleteButton_Clicked(object sender, EventArgs e) {
+            await App.client.GetTable<Post>().DeleteAsync(selectedPost);
+            await DisplayAlert("Success", "Experience successfully deleted", "Ok");
+            /*
             using (var connection = new SQLiteConnection(App.DatabaseLocation)) {
                 connection.CreateTable<Post>();
                 var rows = connection.Delete(selectedPost);
@@ -47,6 +59,7 @@ namespace TavelRecordApp {
                     DisplayAlert("Mf failed", "You ting failed fam", "Sad dev noises");
                 }
             }
+            */
         }
     }
 }

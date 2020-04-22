@@ -9,6 +9,7 @@ using TavelRecordApp.Logic;
 using TavelRecordApp.Model;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using Microsoft.WindowsAzure.MobileServices;
 
 namespace TavelRecordApp {
     [XamlCompilation(XamlCompilationOptions.Compile)]
@@ -27,7 +28,7 @@ namespace TavelRecordApp {
             venueListView.ItemsSource = venues;
         }
 
-        private void ToolbarItem_Clicked(object sender, EventArgs e) {
+        private async void ToolbarItem_Clicked(object sender, EventArgs e) {
             try {
                 var selectedVenue = venueListView.SelectedItem as Venue;
                 var firstCategory = selectedVenue.categories.FirstOrDefault();
@@ -40,9 +41,12 @@ namespace TavelRecordApp {
                     Distance = selectedVenue.location.distance,
                     Latitude = selectedVenue.location.lat,
                     Longitude = selectedVenue.location.lng,
-                    VenueName = selectedVenue.name
+                    VenueName = selectedVenue.name,
+                    UserId = App.user.Id
                 };
 
+
+                /*
                 using (var connection = new SQLiteConnection(App.DatabaseLocation)) {
                     connection.CreateTable<Post>();
                     var rows = connection.Insert(post);
@@ -54,6 +58,9 @@ namespace TavelRecordApp {
                         DisplayAlert("Mf failed", "You ting failed fam", "Sad dev noises");
                     }
                 }
+                */
+                await App.client.GetTable<Post>().InsertAsync(post);
+                await DisplayAlert("Success", "Experience successfully entered", "Ok");
             }
             catch(NullReferenceException nre) {
                 Console.WriteLine(nre);

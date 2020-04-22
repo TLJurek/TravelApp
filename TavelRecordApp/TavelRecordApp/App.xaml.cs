@@ -3,6 +3,7 @@ using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using System.Net.Http;
+using TavelRecordApp.Model;
 
 namespace TavelRecordApp {
     public partial class App : Application {
@@ -10,6 +11,7 @@ namespace TavelRecordApp {
 
         public static MobileServiceClient client = new MobileServiceClient("https://travelrecordappxamtlj.azurewebsites.net", new HttpClientHandler());
 
+        public static Users user = new Users();
         public App() {
             InitializeComponent();
 

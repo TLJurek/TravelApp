@@ -15,11 +15,11 @@ namespace TavelRecordApp {
             InitializeComponent();
         }
 
-        protected override void OnAppearing() {
+        protected override async void OnAppearing() {
             base.OnAppearing();
-            using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation)) {
+            //using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation)) {
                 
-                var postTable = conn.Table<Post>().ToList();
+                var postTable = await App.client.GetTable<Post>().Where(p => p.UserId == App.user.Id).ToListAsync();
 
                 //Full LINQ
                 var catogaries = (from p in postTable
@@ -46,7 +46,7 @@ namespace TavelRecordApp {
                 categoriesListView.ItemsSource = categoriesCount;
 
                 postCountLabel.Text = postTable.Count.ToString();
-            }
+            //}
         }
     }
 }

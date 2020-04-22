@@ -33,6 +33,9 @@ namespace TavelRecordApp {
                 var user = (await App.client.GetTable<Users>().Where(u => u.Email == emailEntry.Text).ToListAsync()).FirstOrDefault();
                 
                 if (user != null) {
+
+                    App.user = user;
+
                     if(user.Password == passwordEntry.Text) {
                         await Navigation.PushAsync(new HomePage());
                     }

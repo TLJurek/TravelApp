@@ -15,13 +15,18 @@ namespace TavelRecordApp {
             InitializeComponent();
         }
 
-        protected override void OnAppearing() {
+        protected override async void OnAppearing() {
             base.OnAppearing();
+            /*
             using (var conn = new SQLiteConnection(App.DatabaseLocation)) {
                 conn.CreateTable<Post>();
                 var posts = conn.Table<Post>().ToList();
                 postListView.ItemsSource = posts;
             };
+            */
+
+            var posts = await App.client.GetTable<Post>().Where(p => p.UserId == App.user.Id).ToListAsync();
+            postListView.ItemsSource = posts;
         }
 
         private void postListView_ItemSelected(object sender, SelectedItemChangedEventArgs e) {
